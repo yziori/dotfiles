@@ -4,13 +4,34 @@ eval "$(mise activate zsh)"
 # fzf
 eval "$(fzf --zsh)"
 
+# 補完強化
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# シンタックスハイライト
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Starship
+eval "$(starship init zsh)"
+
 # ghq + fzf
 function ghq-fzf() {
-    local repo=$(ghq list | fzf --preview "ls $(ghq root)/{}")
-    [[ -n "$repo" ]] && cd "$(ghq root)/$repo"
+    local repo=$(ghq list | fzf --preview 'ls $(ghq root)/{}')
+    if [[ -n "$repo" ]]; then
+        cd "$(ghq root)/$repo"
+    fi
+    zle reset-prompt
 }
 zle -N ghq-fzf
 bindkey '^g' ghq-fzf
 
 # alias
 alias repo='cd $(ghq list --full-path | fzf)'
+
+# 履歴
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+setopt hist_ignore_dups     # 連続する重複コマンドを記録しない
+setopt hist_ignore_all_dups # 古い重複を削除して最新だけ残す
+setopt share_history        # 複数ターミナル間で履歴を共有
+setopt hist_reduce_blanks   # 余分な空白を削除して記録
