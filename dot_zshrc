@@ -1,0 +1,16 @@
+# mise
+eval "$(mise activate zsh)"
+
+# fzf
+eval "$(fzf --zsh)"
+
+# ghq + fzf
+function ghq-fzf() {
+    local repo=$(ghq list | fzf --preview "ls $(ghq root)/{}")
+    [[ -n "$repo" ]] && cd "$(ghq root)/$repo"
+}
+zle -N ghq-fzf
+bindkey '^g' ghq-fzf
+
+# alias
+alias repo='cd $(ghq list --full-path | fzf)'
