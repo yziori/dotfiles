@@ -1,0 +1,36 @@
+format = "$directory$git_branch$git_status$nodejs$golang$aws $character"
+
+[directory]
+truncation_length = 3
+truncate_to_repo = true
+style = "bold cyan"
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[git_status]
+conflicted = " "
+ahead = "⬆"
+behind = "⬇"
+modified = " "
+untracked = " "
+staged = " "
+style = "bold red"
+
+[nodejs]
+symbol = " "
+style = "bold green"
+
+[golang]
+symbol = " "
+style = "bold cyan"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[aws]
+symbol = " "
+style = "bold yellow"
+format = "[$symbol($profile)($region)]($style) "
